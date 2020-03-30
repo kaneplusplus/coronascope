@@ -45,4 +45,3 @@ read_csv(paste("https://raw.githubusercontent.com/nytimes",
            anydate(map_chr(data, steepest_date, "Cases")),
          plots = map(data, make_plot)) %>%
   trelliscope(name = "Coronascope", panel_col = "plots", path = "docs")
-  
