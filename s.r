@@ -16,7 +16,6 @@ steepest_date <- function(x, var) {
 
 make_plot <- function(x) {
   g <- x %>% 
-    arrange(Date) %>%
     select(-fips) %>%
     gather("Type", "Value", -c(Date, County)) %>%
     ggplot(aes(x = Date, y = Value, color = County)) + 
