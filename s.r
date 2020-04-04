@@ -28,7 +28,7 @@ make_plot <- function(x) {
 }
 
 read_csv(paste("https://raw.githubusercontent.com/nytimes",
-                 "covid-19-data/master/us-counties.csv", sep = "/")) %>%
+               "covid-19-data/master/us-counties.csv", sep = "/")) %>%
   rename(Date = date, County = county, State = state, Cases = cases,
          Deaths = deaths) %>%
   nest(data = -c(State)) %>%
