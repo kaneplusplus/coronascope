@@ -18,7 +18,7 @@ make_plot <- function(x) {
   g <- x %>% 
     select(-fips) %>%
     pivot_longer(-c(Date, County), names_to = "Type", values_to = "Value") %>%
-    ggplot(aes(x = Date, y = Value, color = County)) + 
+    ggplot(aes(x = Date, y = Value, group = County, color = County)) + 
       scale_y_log10() +
       geom_line() +
       geom_point() +
@@ -29,8 +29,10 @@ make_plot <- function(x) {
 
 read_csv(paste("https://raw.githubusercontent.com/nytimes",
                "covid-19-data/master/us-counties.csv", sep = "/")) %>%
+  write_csv("us-counties.csv") %>%
   rename(Date = date, County = county, State = state, Cases = cases,
          Deaths = deaths) %>%
+  mutate(Date = anydate(Date)) %>%
   nest(data = -c(State)) %>%
   mutate(total_deaths = map_dbl(data, ~ sum((.x)$Deaths+1, na.rm = TRUE)),
          total_cases = map_dbl(data, ~ sum((.x)$Cases, na.rm = TRUE)),
