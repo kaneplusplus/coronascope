@@ -7,8 +7,6 @@ library(purrr)
 library(anytime)
 library(trelliscopejs)
 
-theme_set(theme_bw())
-
 steepest_date <- function(x, var) {
   curve <- diff(x[[var]])
   as.character(x$Date[which.max(c(0, curve))])
@@ -22,9 +20,8 @@ make_plot <- function(x) {
       scale_y_log10() +
       geom_line() +
       geom_point() +
-      theme(legend.position = "none") +
       facet_grid(Type ~ .)
-  ggplotly(g)
+  ggplotly(g + theme_bw() + theme(legend.position = "none"))
 }
 
 diff_smoothed_last <- function(x, pop, column_name, num_diffs = 1) {
