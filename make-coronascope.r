@@ -47,8 +47,8 @@ read_csv(paste("https://raw.githubusercontent.com/nytimes",
                "covid-19-data/master/us-counties.csv", sep = "/")) %>%
   rename(Date = date, County = county, State = state, Cases = cases,
          Deaths = deaths) %>%
-  left_join(pop, by = "State") %>%
   write_csv("us-counties.csv") %>%
+  left_join(pop, by = "State") %>%
   mutate(Date = anydate(Date)) %>%
   nest(data = -c(State, Population)) %>%
   mutate(total_deaths = map_dbl(data, ~ sum((.x)$Deaths+1, na.rm = TRUE)),
