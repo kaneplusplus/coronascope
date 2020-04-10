@@ -33,12 +33,12 @@ diff_smoothed_last <- function(x, pop, column_name, num_diffs = 1) {
     summarize(state_total = sum({{column_name}})) %>%
     `$`(state_total)
   
-  totals <- totals / pop
+  totals <- totals / pop * 10^5
   
   for (i in seq_len(num_diffs)) {
     totals <- diff(totals)
   }
-  signif(tail(smooth(totals), 1), 3)
+  signif(tail(smooth(totals), 1), digits = 3) 
 }
 
 pop <- read_csv("pop-est-2019.csv") %>% 
